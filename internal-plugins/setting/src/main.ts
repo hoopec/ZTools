@@ -13,6 +13,16 @@ ztools.onPluginEnter((action) => {
   dispatchZtoolsCodeEvent(action, router)
 })
 
+ztools.onPluginOut(() => {
+  if (router.currentRoute.value.name === 'GeneralSetting') {
+    return
+  }
+
+  void router.replace({ name: 'GeneralSetting' }).catch((error) => {
+    console.error('[插件事件: onPluginOut] 重置设置页路由失败', error)
+  })
+})
+
 // 检测操作系统并添加类名到 html 元素
 function detectOS(): void {
   if (window.ztools.isWindows()) {
